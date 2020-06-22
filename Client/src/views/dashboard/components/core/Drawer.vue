@@ -1,15 +1,11 @@
 <template>
   <v-navigation-drawer
     id="core-navigation-drawer"
-    v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
-    :right="$vuetify.rtl"
     :src="barImage"
-    mobile-break-point="960"
     app
     width="260"
-    v-bind="$attrs"
   >
     <template v-slot:img="props">
       <v-img
@@ -25,21 +21,10 @@
       nav
     >
       <v-list-item>
-        <v-list-item-avatar
-          class="align-self-center"
-          color="white"
-          contain
-        >
-          <v-img
-            src="https://demos.creative-tim.com/vuetify-material-dashboard/favicon.ico"
-            max-height="30"
-          />
-        </v-list-item-avatar>
-
         <v-list-item-content>
           <v-list-item-title
             class="display-1"
-            v-text="profile.title"
+            v-text="'Foospower'"
           />
         </v-list-item-content>
       </v-list-item>
@@ -75,16 +60,6 @@
       <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
     </v-list>
-
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: $t('upgrade'),
-          icon: 'mdi-package-up',
-          to: '/upgrade',
-        }"
-      />
-    </template>
   </v-navigation-drawer>
 </template>
 
@@ -108,38 +83,18 @@
       items: [
         {
           icon: 'mdi-view-dashboard',
-          title: 'dashboard',
+          title: 'Home',
           to: '/',
         },
         {
           icon: 'mdi-account',
-          title: 'user',
-          to: '/pages/user',
+          title: 'Players',
+          to: '/players',
         },
         {
-          title: 'rtables',
+          title: 'Games',
           icon: 'mdi-clipboard-outline',
-          to: '/tables/regular-tables',
-        },
-        {
-          title: 'typography',
-          icon: 'mdi-format-font',
-          to: '/components/typography',
-        },
-        {
-          title: 'icons',
-          icon: 'mdi-chart-bubble',
-          to: '/components/icons',
-        },
-        {
-          title: 'google',
-          icon: 'mdi-map-marker',
-          to: '/maps/google-maps',
-        },
-        {
-          title: 'notifications',
-          icon: 'mdi-bell',
-          to: '/components/notifications',
+          to: '/games',
         },
       ],
     }),
@@ -162,6 +117,9 @@
           avatar: true,
           title: this.$t('avatar'),
         }
+      },
+      mini () {
+        return this.$vuetify.breakpoint.mdAndDown
       },
     },
 

@@ -4,7 +4,7 @@
     fluid
     tag="section"
   >
-    <v-row>
+    <!-- <v-row>
       <v-col
         cols="12"
         lg="4"
@@ -388,16 +388,67 @@
           </v-tabs-items>
         </base-material-card>
       </v-col>
-    </v-row>
+    </v-row> -->
+    <create-game-modal
+      :show-modal.sync="showCreateGameModal"
+    />
+    <v-speed-dial
+      v-model="fab"
+      open-on-hover
+      direction="top"
+      transition="slide-y-reverse-transition"
+      bottom
+      right
+      fixed
+    >
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          color="blue darken-2"
+          dark
+          fab
+        >
+          <v-icon v-if="fab">
+            mdi-close
+          </v-icon>
+          <v-icon v-else>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="green"
+        @click="showCreateGameModal = true"
+      >
+        <v-icon>mdi-clipboard-plus-outline</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+      >
+        <v-icon>mdi-account-plus</v-icon>
+      </v-btn>
+    </v-speed-dial>
   </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'DashboardDashboard',
+  import CreateGameModal from '../../components/base/CreateGameModal'
 
+  export default {
+    name: 'Home',
+    components: {
+      CreateGameModal,
+    },
     data () {
       return {
+        fab: false,
+        showCreateGameModal: false,
         dailySalesChart: {
           data: {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
@@ -591,10 +642,15 @@
         },
       }
     },
-
+    mounted () {
+      this.getAllPlayers()
+    },
     methods: {
       complete (index) {
         this.list[index] = !this.list[index]
+      },
+      getAllPlayers () {
+        this.$store.dispatch('getAllPlayers')
       },
     },
   }

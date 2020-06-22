@@ -5,11 +5,13 @@ let playerSchema = new Schema({
     name: {
         type: String
     },
-    games: {
-        type: Number
-    },
+    games: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Game'
+    }],
     wins: {
-        type: Number
+        type: Number,
+        default: 0
     }
 }, {
     collection: 'players',

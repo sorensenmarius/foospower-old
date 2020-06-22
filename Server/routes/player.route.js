@@ -4,7 +4,6 @@ const router = express.Router();
 let PlayerModel = require('../models/Player');
 
 router.route('/getAll').get((req, res, next) => {
-    console.log("player/")
     PlayerModel.find((error, data) => {
         if(error) {
             return next(error)

@@ -20,8 +20,12 @@ import './plugins/chartist'
 import './plugins/vee-validate'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import Axios from 'axios'
 
 Vue.config.productionTip = false
+Vue.prototype.$http = Axios.create({
+  baseURL: process.env.VUE_APP_API_URL,
+})
 
 new Vue({
   router,
