@@ -69,7 +69,7 @@
                   label="WJ (4)"
                   :items="allPlayers"
                   item-text="name"
-                  item-value
+                  item-value="_id"
                   required
                   outlined
                 />
@@ -82,6 +82,7 @@
               <span class="switcher switcher-1">
                 <input
                   id="switcher-1"
+                  v-model="blackWin"
                   type="checkbox"
                 >
                 <label for="switcher-1" />
@@ -90,9 +91,11 @@
             <v-row justify="space-between">
               <v-col sm="4">
                 <v-text-field
-                  v-model="blackScore"
+                  :value="!blackWin ? loserScore : 10"
+                  :disabled="blackWin"
                   type="number"
                   solo
+                  @input="loserScore = $event"
                 />
               </v-col>
               <v-col class="center-content">
@@ -102,9 +105,11 @@
               </v-col>
               <v-col sm="4">
                 <v-text-field
-                  v-model="whiteScore"
+                  :value="blackWin ? loserScore : 10"
+                  :disabled="!blackWin"
                   type="number"
                   solo
+                  @input="loserScore = $event"
                 />
               </v-col>
             </v-row>
@@ -143,7 +148,8 @@
         WK: '',
         BJ: '',
         WJ: '',
-        whiteWin: true,
+        blackWin: true,
+        loserScore: 0,
       }
     },
     computed: {
@@ -152,6 +158,15 @@
       },
       chosenPlayers: function () {
         return [this.BK, this.WK, this.BJ, this.WJ]
+      },
+    },
+    methods: {
+      addGame: function () {
+        this.$http.post('game/create', {
+          players: this.chosenPlayers,
+          loserScore: this.loserScore,
+          blackWin: this.blackWin,
+        })
       },
     },
   }
@@ -186,6 +201,7 @@ body {
          background-color:$black;
          outline:none;
          font-family: 'Oswald', sans-serif;
+         border: 1px black solid;
 
          &:before, &:after {
             z-index:2;

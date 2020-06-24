@@ -22,8 +22,8 @@ let gameSchema = new Schema({
     blackTeam: {
         type: teamSchema
     },
-    winner: {
-        type: String
+    whiteWin: {
+        type: Boolean
     }
 }, {
     collection: 'games',

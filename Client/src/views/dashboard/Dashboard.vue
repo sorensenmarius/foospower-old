@@ -392,6 +392,9 @@
     <create-game-modal
       :show-modal.sync="showCreateGameModal"
     />
+    <create-player-modal
+      :show-modal.sync="showCreatePlayerModal"
+    />
     <v-speed-dial
       v-model="fab"
       open-on-hover
@@ -430,6 +433,7 @@
         dark
         small
         color="indigo"
+        @click="showCreatePlayerModal = true"
       >
         <v-icon>mdi-account-plus</v-icon>
       </v-btn>
@@ -439,16 +443,19 @@
 
 <script>
   import CreateGameModal from '../../components/base/CreateGameModal'
+  import CreatePlayerModal from '../../components/base/CreatePlayerModal'
 
   export default {
     name: 'Home',
     components: {
       CreateGameModal,
+      CreatePlayerModal,
     },
     data () {
       return {
         fab: false,
         showCreateGameModal: false,
+        showCreatePlayerModal: false,
         dailySalesChart: {
           data: {
             labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
