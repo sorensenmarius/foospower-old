@@ -27,9 +27,14 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async getAllPlayers (context) {
+    async getAllPlayersFromApi (context) {
       const res = await this.$http.get('player/getAll')
       context.commit('setAllPlayers', res.data)
+    },
+  },
+  getters: {
+    getAllPlayers: state => {
+      return state.allPlayers
     },
   },
 })

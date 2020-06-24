@@ -7,59 +7,108 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">Add a game</span>
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
+            <v-row
+              justify="space-between"
+            >
               <v-col
                 cols="12"
-                sm="6"
-                md="4"
+                sm="5"
               >
-                <v-text-field
-                  label="Legal first name*"
+                <v-autocomplete
+                  v-model="BJ"
+                  label="BJ (3)"
+                  :items="allPlayers"
+                  item-text="name"
+                  item-value="_id"
                   required
-                />
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
+                  outlined
                 />
               </v-col>
               <v-col
                 cols="12"
-                sm="6"
-                md="4"
+                sm="5"
               >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
+                <v-autocomplete
+                  v-model="WK"
+                  label="WK (2)"
+                  :items="allPlayers"
+                  item-text="name"
+                  item-value="_id"
                   required
+                  outlined
                 />
               </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Email*"
+            </v-row>
+            <v-row
+              justify="space-between"
+            >
+              <v-col
+                cols="12"
+                sm="5"
+              >
+                <v-autocomplete
+                  v-model="BK"
+                  label="BK (1)"
+                  :items="allPlayers"
+                  item-text="name"
+                  item-value="_id"
                   required
+                  outlined
                 />
               </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
+              <v-col
+                cols="12"
+                sm="5"
+              >
+                <v-autocomplete
+                  v-model="WJ"
+                  label="WJ (4)"
+                  :items="allPlayers"
+                  item-text="name"
+                  item-value
                   required
+                  outlined
+                />
+              </v-col>
+            </v-row>
+            <v-row justify="space-around">
+              <h3>Winner</h3>
+            </v-row>
+            <v-row justify="space-around">
+              <span class="switcher switcher-1">
+                <input
+                  id="switcher-1"
+                  type="checkbox"
+                >
+                <label for="switcher-1" />
+              </span>
+            </v-row>
+            <v-row justify="space-between">
+              <v-col sm="4">
+                <v-text-field
+                  v-model="blackScore"
+                  type="number"
+                  solo
+                />
+              </v-col>
+              <v-col class="center-content">
+                <h4 class="score-header">
+                  Score
+                </h4>
+              </v-col>
+              <v-col sm="4">
+                <v-text-field
+                  v-model="whiteScore"
+                  type="number"
+                  solo
                 />
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -73,7 +122,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="showModal = false"
+            @click="addGame"
           >
             Save
           </v-btn>
@@ -83,15 +132,125 @@
   </v-row>
 </template>
 
-<script lang="ts">
-  import Vue from 'vue'
-  export default Vue.extend({
+<script>
+  export default {
     props: {
-      showModal: {
-        type: Boolean,
-        default: false,
-        required: true,
+      showModal: Boolean,
+    },
+    data: function () {
+      return {
+        BK: '',
+        WK: '',
+        BJ: '',
+        WJ: '',
+        whiteWin: true,
+      }
+    },
+    computed: {
+      allPlayers: function () {
+        return this.$store.getters.getAllPlayers
+      },
+      chosenPlayers: function () {
+        return [this.BK, this.WK, this.BJ, this.WJ]
       },
     },
-  })
+  }
 </script>
+
+<style lang="scss" scoped>
+  $black:#1E1E1E;
+  $grey:#CCCCCC;
+  $white:#FFFFFF;
+  .center-content {
+    text-align: center;
+  }
+
+  .score-header {
+    margin-top: 10px;
+  }
+
+body {
+   span.switcher {
+      position: relative;
+      width:200px;
+      height:50px;
+      border-radius:25px;
+      margin:20px 0;
+
+      input {
+         appearance: none;
+         position: relative;
+         width:200px;
+         height:50px;
+         border-radius:25px;
+         background-color:$black;
+         outline:none;
+         font-family: 'Oswald', sans-serif;
+
+         &:before, &:after {
+            z-index:2;
+            position: absolute;
+            top:50%;
+            transform:translateY(-50%);
+            color:$white;
+         }
+         &:before {
+            content: 'BLACK';
+            left:20px;
+         }
+         &:after {
+            content: 'WHITE';
+            right:20px;
+         }
+      }
+      label {
+         z-index:1;
+         position: absolute;
+         bottom:11px;
+         height: 30px;
+         border-radius:20px;
+      }
+      &.switcher-1 {
+         input {
+            transition:.25s -.1s;
+            &:checked {
+               background-color:$white;
+               &:before {
+                  color:$white;
+                  transition: color .5s .2s;
+               }
+               &:after {
+                  color:$grey;
+                  transition: color .5s;
+               }
+               &+label {
+                  left:10px;
+                  right:100px;
+
+                  background:$black;
+                  transition: left .5s, right .4s .2s;
+               }
+            }
+            &:not(:checked) {
+               background:$black;
+               transition: background .5s -.1s;
+               &:before {
+                  color:$grey;
+                  transition: color .5s;
+               }
+               &:after {
+                  color:$black;
+                  transition: color .5s .2s;
+               }
+               &+label {
+                  left:100px;
+                  right:10px;
+                  background:$white;
+                  transition: left .4s .2s, right .5s, background .35s -.1s;
+               }
+            }
+         }
+      }
+    }
+  }
+</style>

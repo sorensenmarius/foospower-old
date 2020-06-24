@@ -650,7 +650,7 @@
         this.list[index] = !this.list[index]
       },
       getAllPlayers () {
-        this.$store.dispatch('getAllPlayers')
+        this.$store.dispatch('getAllPlayersFromApi')
       },
     },
   }
