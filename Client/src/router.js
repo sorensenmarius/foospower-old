@@ -20,13 +20,18 @@ export default new Router({
         // Pages
         {
           name: 'Players',
-          path: 'games',
-          component: () => import('@/views/dashboard/pages/UserProfile'),
+          path: 'players',
+          component: () => import('@/views/players/Players'),
+        },
+        {
+          name: 'Player profile',
+          path: 'players/:id',
+          component: () => import('@/views/players/PlayerProfile'),
         },
         {
           name: 'Games',
-          path: 'players',
-          component: () => import('@/views/dashboard/pages/UserProfile'),
+          path: 'games',
+          component: () => import('@/views/games/Games'),
         },
       ],
     },

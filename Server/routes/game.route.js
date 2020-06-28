@@ -38,11 +38,10 @@ router.route('/create').post((req, res, next) => {
         if(error) {
             return next(error)
         } else {
-            // Damn this is ugly
             let winnerTeam = data.blackWin ? data.blackTeam : data.whiteTeam
             let loserTeam = !data.blackWin ? data.blackTeam : data.whiteTeam
             winnerTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
-            loserTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
+            loserTeam = [mongoose.Types.ObjectId(loserTeam.offense), mongoose.Types.ObjectId(loserTeam.defense)]
             PlayerModel.updateMany({ _id: {$in: winnerTeam}}, {
                 $push: {
                     games: data._id
@@ -89,6 +88,16 @@ router.route('/delete/:id').delete((req, res, next) => {
             res.status(200).json({
                 msg: data
             })
+        }
+    })
+})
+
+router.route('/deleteAll').delete((req, res, next) => {
+    GameModel.remove({}, (error, data) => {
+        if(error) {
+            return next(error)
+        } else {
+            res.json(data)
         }
     })
 })

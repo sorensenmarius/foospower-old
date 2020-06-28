@@ -1,6 +1,7 @@
 <template>
   <v-navigation-drawer
     id="core-navigation-drawer"
+    v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
     :src="barImage"

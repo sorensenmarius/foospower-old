@@ -24,7 +24,9 @@ router.route('/create').post((req, res, next) => {
 })
 
 router.route('/get/:id').get((req, res, next) => {
-    PlayerModel.findById(req.params.id, (error, data) => {
+    PlayerModel.findById(req.params.id)
+    .populate('games')
+    .exec((error, data) => {
         if(error) {
             return next(error)
         } else {
@@ -41,6 +43,21 @@ router.route('/delete/:id').delete((req, res, next) => {
             res.status(200).json({
                 msg: data
             })
+        }
+    })
+})
+
+router.route('/resetAll').get((req, res, next) => {
+    PlayerModel.updateMany({}, {
+        $set: {
+            games: [],
+            wins: 0
+        }
+    }, (error, data) => {
+        if(error) {
+            return next(error)
+        } else {
+            res.json(data)
         }
     })
 })

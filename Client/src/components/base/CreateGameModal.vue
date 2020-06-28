@@ -167,6 +167,7 @@
           loserScore: this.loserScore,
           blackWin: this.blackWin,
         })
+        this.showModal = false
       },
     },
   }

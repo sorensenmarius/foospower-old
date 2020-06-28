@@ -14,6 +14,7 @@ export default new Vuex.Store({
     barImage: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
     drawer: null,
     allPlayers: [],
+    allGames: [],
   },
   mutations: {
     SET_BAR_IMAGE (state, payload) {
@@ -25,16 +26,26 @@ export default new Vuex.Store({
     setAllPlayers (state, payload) {
       state.allPlayers = payload
     },
+    setAllGames (state, payload) {
+      state.allGames = payload
+    },
   },
   actions: {
     async getAllPlayersFromApi (context) {
       const res = await this.$http.get('player/getAll')
       context.commit('setAllPlayers', res.data)
     },
+    async getAllGamesFromApi (context) {
+      const res = await this.$http.get('game/getAll')
+      context.commit('setAllGames', res.data)
+    },
   },
   getters: {
     getAllPlayers: state => {
       return state.allPlayers
+    },
+    getAllGames: state => {
+      return state.allGames
     },
   },
 })
