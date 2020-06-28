@@ -32,7 +32,7 @@ app.use('/game', gameAPI);
 app.use('/player', playerAPI);
 
 // Choose port and start listen
-const port = process.env.POR || 4000;
+const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 });
