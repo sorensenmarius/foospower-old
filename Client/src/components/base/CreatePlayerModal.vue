@@ -46,7 +46,11 @@
     methods: {
       addPlayer: function () {
         this.$http.post('player/create', {
-          name: name,
+          name: this.name,
+        }).then(() => {
+          this.$emit('update:showModal', false)
+        }).catch((e) => {
+          console.error(e)
         })
       },
     },

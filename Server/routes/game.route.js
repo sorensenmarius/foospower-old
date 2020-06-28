@@ -41,16 +41,29 @@ router.route('/create').post((req, res, next) => {
             // Damn this is ugly
             let winnerTeam = data.blackWin ? data.blackTeam : data.whiteTeam
             let loserTeam = !data.blackWin ? data.blackTeam : data.whiteTeam
-            // TODO - This isnt working
-            PlayerModel.find({ _id: {$in: [winnerTeam.offense, winnerTeam.defense]}}).update(
-                { $push: { games: data._id } },
-                { $inc: { wins: 1 }},
-                { multi: true }
-            )
-            PlayerModel.find({ _id: {$in: [loserTeam.offense, loserTeam.defense]}}).update(
-                { $push: { games: data._id } },
-                { multi: true }
-            )
+            winnerTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
+            loserTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
+            PlayerModel.updateMany({ _id: {$in: winnerTeam}}, {
+                $push: {
+                    games: data._id
+                },
+                $inc: {
+                    wins: 1
+                }
+            }, (err) => {
+                if(err) {
+                    return next(error)
+                }
+            })
+            PlayerModel.updateMany({ _id: {$in: loserTeam}}, {
+                $push: {
+                    games: data._id
+                }
+            }, (err) => {
+                if(err) {
+                    return next(error)
+                }
+            })
             res.json(data)
         }
     })
