@@ -32,4 +32,4 @@ jobs:
         app-name: 'foospower-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_2f3a746d8bf74049b5cd959364f8a160 }}
-        package: .
+        package: ./Server
