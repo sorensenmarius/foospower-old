@@ -19,10 +19,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    
-    - name: Change .env variables
-      env: 
-        DB_URI: ${{ secrets.DB_URI }}
         
     - name: npm install, build, and test
       run: |
@@ -32,6 +28,8 @@ jobs:
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
+      env:
+        DB_URI: ${{ secrets.DB_URI }}
       with:
         app-name: 'foospower-api'
         slot-name: 'production'
