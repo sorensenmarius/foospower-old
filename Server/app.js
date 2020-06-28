@@ -11,7 +11,7 @@ mongoose.connect(database.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log("Database connected")
+    console.log("Database connected at " + database.db)
   },
   error => {
     console.log("Database could't be connected to: " + error)
