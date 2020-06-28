@@ -34,4 +34,4 @@ jobs:
         ftp-server: ftp://ftp.domeneshop.no/foospower
         ftp-username: s0rensen
         ftp-password: ${{ secrets.FTPPASSWORD }} 
-        local-dir: Client/build # This folder is NOT going to upload by default unless you add it to .git-ftp-include
+        local-dir: Client/dist # This folder is NOT going to upload by default unless you add it to .git-ftp-include
