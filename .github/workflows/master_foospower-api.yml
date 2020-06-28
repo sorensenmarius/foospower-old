@@ -19,7 +19,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-
+    
+    - name: Change .env variables
+      env: 
+        DB_URI: ${{ secrets.DB_URI }}
+        
     - name: npm install, build, and test
       run: |
         cd Server
