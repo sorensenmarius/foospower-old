@@ -12,6 +12,10 @@ let playerSchema = new Schema({
     wins: {
         type: Number,
         default: 0
+    },
+    avatar: {
+        type: String,
+        default: ''
     }
 }, {
     collection: 'players',

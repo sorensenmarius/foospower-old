@@ -1,5 +1,6 @@
 <template>
   <v-row
+    v-if="!loading"
     justify="center"
   >
     <v-col>
@@ -31,6 +32,11 @@
       LowestWinrate,
       MostGamesPlayed,
     },
+    data () {
+      return {
+        loading: true,
+      }
+    },
     computed: {
       players: function () {
         return this.$store.getters.getAllPlayers
@@ -39,16 +45,17 @@
         return this.$store.getters.getAllGames
       },
     },
-    mounted () {
-      this.getAllPlayers()
-      this.getAllGames()
+    async mounted () {
+      await this.getAllPlayers()
+      await this.getAllGames()
+      this.loading = false
     },
     methods: {
-      getAllPlayers () {
-        this.$store.dispatch('getAllPlayersFromApi')
+      async getAllPlayers () {
+        await this.$store.dispatch('getAllPlayersFromApi')
       },
-      getAllGames () {
-        this.$store.dispatch('getAllGamesFromApi')
+      async getAllGames () {
+        await this.$store.dispatch('getAllGamesFromApi')
       },
     },
   }

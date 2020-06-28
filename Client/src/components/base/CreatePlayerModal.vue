@@ -1,8 +1,8 @@
 <template>
   <v-dialog
     v-model="showModal"
-    persistent
     max-width="600px"
+    @click:outside="$emit('update:showModal', false)"
   >
     <v-card>
       <v-card-title>Add a player</v-card-title>

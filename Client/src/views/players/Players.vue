@@ -11,7 +11,7 @@
       >
         <base-material-card
           class="v-card-profile"
-          avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+          :avatar="player.avatar ? player.avatar : 'https://svgsilh.com/svg_v2/156584.svg'"
         >
           <v-card-text class="text-center">
             <h6 class="display-1 mb-1 grey--text">

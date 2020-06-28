@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
-    db: 'mongodb://localhost:27017/FOOS'
+    db: process.env.DB_URI
 }
