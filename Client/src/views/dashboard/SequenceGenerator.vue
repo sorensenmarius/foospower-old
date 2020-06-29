@@ -63,7 +63,7 @@
             sm="1"
             class="centered-text"
           >
-            <h2>{{ num }}</h2>
+            <h2>{{ getRole(num) }}</h2>
           </v-col>
         </v-row>
         <v-row
@@ -118,6 +118,19 @@
         this.direction = Math.random() > 0.5 ? 'counter-clockwise' : 'clockwise'
         this.starting = Math.random() > 0.5 ? 'left' : 'right'
         this.rolling = true
+      },
+	  getRole (num) {
+        if (num > 4) return 'Out'
+        switch (num) {
+          case (1):
+            return 'WK'
+          case (2):
+            return 'BK'
+          case (3):
+            return 'WJ'
+          case (4):
+            return 'BJ'
+        }
       },
     },
   }
