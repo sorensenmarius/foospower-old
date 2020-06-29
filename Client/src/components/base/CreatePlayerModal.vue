@@ -11,6 +11,10 @@
           v-model="name"
           label="Name"
         />
+        <v-text-field
+          v-model="img"
+          label="Image link"
+        />
       </v-card-text>
       <v-card-actions>
         <v-spacer />
@@ -41,12 +45,14 @@
     data: function () {
       return {
         name: '',
+        img: ''
       }
     },
     methods: {
       addPlayer: function () {
         this.$http.post('player/create', {
           name: this.name,
+          avatar: this.img,
         }).then(() => {
           this.$emit('update:showModal', false)
         }).catch((e) => {
