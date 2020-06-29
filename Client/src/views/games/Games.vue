@@ -49,18 +49,38 @@
             <td>{{ getLoserTeam(g) }}</td>
             <td>{{ '10 - ' + g.loserScore }}</td>
             <td>{{ getTime(g) }}</td>
+            <td>
+              <v-btn
+                color="success"
+                icon
+                @click="openEditModal(g)"
+              >
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+            </td>
           </tr>
         </tbody>
       </v-simple-table>
     </base-material-card>
+    <create-game-modal
+      :show-modal.sync="showCreateGameModal"
+      :edit-game="editGame"
+    />
   </v-container>
 </template>
 
 <script>
+  import CreateGameModal from '../../components/base/CreateGameModal'
   export default {
+    name: 'Games',
+    components: {
+      CreateGameModal,
+    },
     data () {
       return {
-        tableHeaders: ['Winners', 'Losers', 'Score', 'Time'],
+        tableHeaders: ['Winners', 'Losers', 'Score', 'Time', ''],
+        showCreateGameModal: false,
+        editGame: null,
       }
     },
     computed: {
@@ -98,6 +118,10 @@
         const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }
         const d = new Date(game.createdAt)
         return d.toLocaleTimeString([], { timeStyle: 'short' }) + ' - ' + d.toLocaleString('nb-NO', options)
+      },
+      openEditModal (game) {
+        this.editGame = game
+        this.showCreateGameModal = true
       },
     },
   }

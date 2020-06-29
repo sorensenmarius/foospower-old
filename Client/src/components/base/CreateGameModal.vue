@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">Add a game</span>
+          <span class="headline">{{ editGame._id ? 'Edit game' : 'Add a game' }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -145,6 +145,10 @@
   export default {
     props: {
       showModal: Boolean,
+      editGame: {
+        type: Object,
+        default: () => ({}),
+      },
     },
     data: function () {
       return {
@@ -164,14 +168,45 @@
         return [this.WK, this.BK, this.WJ, this.BJ]
       },
     },
+    watch: {
+      editGame: function () {
+        this.setEditGame()
+      },
+    },
     methods: {
       addGame: function () {
-        this.$http.post('game/create', {
-          players: this.chosenPlayers,
-          loserScore: this.loserScore,
-          blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
-        })
+        if (this.editGame._id) {
+          this.$http.post('game/edit', {
+            id: this.editGame._id,
+            players: this.chosenPlayers,
+            loserScore: this.loserScore,
+            blackWin: !this.whiteWin,
+          })
+        } else {
+          this.$http.post('game/create', {
+            players: this.chosenPlayers,
+            loserScore: this.loserScore,
+            blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
+          })
+        }
         this.showModal = false
+      },
+      setEditGame: function () {
+        if (this.editGame._id) {
+          this.BK = this.editGame.blackTeam.offense._id
+          this.WK = this.editGame.whiteTeam.offense._id
+          this.BJ = this.editGame.blackTeam.defense._id
+          this.WJ = this.editGame.whiteTeam.defense._id
+          this.whiteWin = !this.editGame.blackWin
+          this.loserScore = this.editGame.loserScore
+        } else {
+          this.BK = ''
+          this.WK = ''
+          this.BJ = ''
+          this.WJ = ''
+          this.whiteWin = true
+          this.loserScore = 0
+        }
       },
     },
   }

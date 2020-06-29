@@ -25,12 +25,12 @@ router.route('/create').post((req, res, next) => {
     let gameObject = {
         loserScore: parseInt(data.loserScore),
         whiteTeam: {
-            offense: data.players[1],
-            defense: data.players[3]
-        },
-        blackTeam: {
             offense: data.players[0],
             defense: data.players[2]
+        },
+        blackTeam: {
+            offense: data.players[1],
+            defense: data.players[3]
         },
         blackWin: data.blackWin
     }
@@ -64,6 +64,86 @@ router.route('/create').post((req, res, next) => {
                 }
             })
             res.json(data)
+        }
+    })
+})
+
+router.route('/edit').post((req, res, next) => {
+    let reqData = req.body
+    let newGameObject = {
+        loserScore: parseInt(reqData.loserScore),
+        whiteTeam: {
+            offense: reqData.players[0],
+            defense: reqData.players[2]
+        },
+        blackTeam: {
+            offense: reqData.players[1],
+            defense: reqData.players[3]
+        },
+        blackWin: reqData.blackWin
+    }
+    GameModel.findOne({_id: reqData.id}, (error, data) => {
+        if(error) return next(error)
+        let winnerTeam = data.blackWin ? data.blackTeam : data.whiteTeam
+        let loserTeam = !data.blackWin ? data.blackTeam : data.whiteTeam
+        winnerTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
+        loserTeam = [mongoose.Types.ObjectId(loserTeam.offense), mongoose.Types.ObjectId(loserTeam.defense)]
+        PlayerModel.updateMany({ _id: {$in: winnerTeam}}, {
+            $pull: {
+                games: data._id
+            },
+            $inc: {
+                wins: -1
+            }
+        }, (err) => {
+            if(err) {
+                return next(error)
+            }
+        })
+        PlayerModel.updateMany({ _id: {$in: loserTeam}}, {
+            $pull: {
+                games: data._id
+            }
+        }, (err) => {
+            if(err) {
+                return next(error)
+            }
+        })
+    })
+    GameModel.updateOne({_id: reqData.id},{
+        $set: {
+            loserScore: newGameObject.loserScore,
+            blackTeam: newGameObject.blackTeam,
+            whiteTeam: newGameObject.whiteTeam,
+            blackWin: newGameObject.blackWin
+        },
+    }, (error, data) => {
+        if(error) return next(error)
+    })
+    let winnerTeam = newGameObject.blackWin ? newGameObject.blackTeam : newGameObject.whiteTeam
+    let loserTeam = !newGameObject.blackWin ? newGameObject.blackTeam : newGameObject.whiteTeam
+    // Should probably use .map here ;)
+    winnerTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
+    loserTeam = [mongoose.Types.ObjectId(loserTeam.offense), mongoose.Types.ObjectId(loserTeam.defense)]
+    PlayerModel.updateMany({ _id: {$in: winnerTeam}}, {
+        $push: {
+            games: reqData.id
+        },
+        $inc: {
+            wins: 1
+        }
+    }, (err) => {
+        if(err) {
+            return next(error)
+        }
+    })
+    PlayerModel.updateMany({ _id: {$in: loserTeam}}, {
+        $push: {
+            games: reqData.id
+        }
+    }, (err) => {
+        if(err) {
+            return next(error)
         }
     })
 })
