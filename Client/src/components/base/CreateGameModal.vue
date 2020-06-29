@@ -161,7 +161,7 @@
         return this.$store.getters.getAllPlayers
       },
       chosenPlayers: function () {
-        return [this.BK, this.WK, this.BJ, this.WJ]
+        return [this.WK, this.BK, this.WJ, this.BJ]
       },
     },
     methods: {
