@@ -22,7 +22,7 @@ let gameSchema = new Schema({
     blackTeam: {
         type: teamSchema
     },
-    whiteWin: {
+    blackWin: {
         type: Boolean
     }
 }, {
