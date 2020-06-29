@@ -45,7 +45,7 @@
     data: function () {
       return {
         name: '',
-        img: ''
+        img: '',
       }
     },
     methods: {

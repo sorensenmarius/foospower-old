@@ -17,10 +17,11 @@
               <v-col
                 cols="12"
                 sm="5"
+                class="input-col"
               >
                 <v-autocomplete
-                  v-model="BJ"
-                  label="BJ (3)"
+                  v-model="WJ"
+                  label="WJ (3)"
                   :items="allPlayers"
                   item-text="name"
                   item-value="_id"
@@ -31,10 +32,11 @@
               <v-col
                 cols="12"
                 sm="5"
+                class="input-col black-team"
               >
                 <v-autocomplete
-                  v-model="WK"
-                  label="WK (2)"
+                  v-model="BK"
+                  label="BK (2)"
                   :items="allPlayers"
                   item-text="name"
                   item-value="_id"
@@ -49,10 +51,11 @@
               <v-col
                 cols="12"
                 sm="5"
+                class="input-col"
               >
                 <v-autocomplete
-                  v-model="BK"
-                  label="BK (1)"
+                  v-model="WK"
+                  label="WK (1)"
                   :items="allPlayers"
                   item-text="name"
                   item-value="_id"
@@ -63,10 +66,11 @@
               <v-col
                 cols="12"
                 sm="5"
+                class="input-col black-team"
               >
                 <v-autocomplete
-                  v-model="WJ"
-                  label="WJ (4)"
+                  v-model="BJ"
+                  label="BJ (4)"
                   :items="allPlayers"
                   item-text="name"
                   item-value="_id"
@@ -82,7 +86,7 @@
               <span class="switcher switcher-1">
                 <input
                   id="switcher-1"
-                  v-model="blackWin"
+                  v-model="whiteWin"
                   type="checkbox"
                 >
                 <label for="switcher-1" />
@@ -91,8 +95,8 @@
             <v-row justify="space-between">
               <v-col sm="4">
                 <v-text-field
-                  :value="!blackWin ? loserScore : 10"
-                  :disabled="blackWin"
+                  :value="!whiteWin ? loserScore : 10"
+                  :disabled="whiteWin"
                   type="number"
                   solo
                   @input="loserScore = $event"
@@ -105,8 +109,8 @@
               </v-col>
               <v-col sm="4">
                 <v-text-field
-                  :value="blackWin ? loserScore : 10"
-                  :disabled="!blackWin"
+                  :value="whiteWin ? loserScore : 10"
+                  :disabled="!whiteWin"
                   type="number"
                   solo
                   @input="loserScore = $event"
@@ -148,7 +152,7 @@
         WK: '',
         BJ: '',
         WJ: '',
-        blackWin: true,
+        whiteWin: true,
         loserScore: 0,
       }
     },
@@ -165,7 +169,7 @@
         this.$http.post('game/create', {
           players: this.chosenPlayers,
           loserScore: this.loserScore,
-          blackWin: this.blackWin,
+          blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
         })
         this.showModal = false
       },
@@ -199,7 +203,7 @@ body {
          width:200px;
          height:50px;
          border-radius:25px;
-         background-color:$black;
+         background-color:$white;
          outline:none;
          font-family: 'Oswald', sans-serif;
          border: 1px black solid;
@@ -209,14 +213,14 @@ body {
             position: absolute;
             top:50%;
             transform:translateY(-50%);
-            color:$white;
+            color:$black;
          }
          &:before {
-            content: 'BLACK';
+            content: 'WHITE';
             left:20px;
          }
          &:after {
-            content: 'WHITE';
+            content: 'BLACK';
             right:20px;
          }
       }
@@ -229,11 +233,11 @@ body {
       }
       &.switcher-1 {
          input {
-            transition:.25s -.1s;
+            transition:.25s .1s;
             &:checked {
-               background-color:$white;
+               background-color:$black;
                &:before {
-                  color:$white;
+                  color:$black;
                   transition: color .5s .2s;
                }
                &:after {
@@ -244,25 +248,25 @@ body {
                   left:10px;
                   right:100px;
 
-                  background:$black;
+                  background:$white;
                   transition: left .5s, right .4s .2s;
                }
             }
             &:not(:checked) {
-               background:$black;
-               transition: background .5s -.1s;
+               background: $white;
+               transition: background .5s .1s;
                &:before {
                   color:$grey;
                   transition: color .5s;
                }
                &:after {
-                  color:$black;
+                  color:$white;
                   transition: color .5s .2s;
                }
                &+label {
                   left:100px;
                   right:10px;
-                  background:$white;
+                  background:$black;
                   transition: left .4s .2s, right .5s, background .35s -.1s;
                }
             }
@@ -270,4 +274,14 @@ body {
       }
     }
   }
+
+@media only screen and (max-width: 600px) {
+  .input-col {
+    max-width: 80%;
+  }
+
+  .black-team {
+    margin-left: 20%;
+  }
+}
 </style>
