@@ -3,17 +3,29 @@
     v-if="!loading"
     justify="center"
   >
-    <v-col>
+    <v-col
+      cols="12"
+      sm="12"
+      md="4"
+    >
       <highest-winrate
         :players="players"
       />
     </v-col>
-    <v-col>
+    <v-col
+      cols="12"
+      sm="12"
+      md="4"
+    >
       <lowest-winrate
         :players="players"
       />
     </v-col>
-    <v-col>
+    <v-col
+      cols="12"
+      sm="12"
+      md="4"
+    >
       <most-games-played
         :players="players"
       />
