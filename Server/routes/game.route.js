@@ -3,10 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const mongoose = require('mongoose');
-const Schema= mongoose.Schema;
 
 let GameModel = require('../models/Game');
-let PlayerModel = require('../models/Player')
+let utils = require('../utilities/utils')
 
 router.route('/getAll').get((req, res, next) => {
     GameModel.find()
@@ -20,52 +19,47 @@ router.route('/getAll').get((req, res, next) => {
     })
 })
 
-router.route('/create').post((req, res, next) => {
+router.route('/create').post(async (req, res, next) => {
     let data = req.body
     let gameObject = {
         loserScore: parseInt(data.loserScore),
         whiteTeam: {
-            offense: data.players[1],
-            defense: data.players[3]
-        },
-        blackTeam: {
             offense: data.players[0],
             defense: data.players[2]
         },
+        blackTeam: {
+            offense: data.players[1],
+            defense: data.players[3]
+        },
         blackWin: data.blackWin
     }
-    GameModel.create(gameObject, (error, data) => {
+    await GameModel.create(gameObject, async (error, data) => {
         if(error) {
             return next(error)
         } else {
-            let winnerTeam = data.blackWin ? data.blackTeam : data.whiteTeam
-            let loserTeam = !data.blackWin ? data.blackTeam : data.whiteTeam
-            winnerTeam = [mongoose.Types.ObjectId(winnerTeam.offense), mongoose.Types.ObjectId(winnerTeam.defense)]
-            loserTeam = [mongoose.Types.ObjectId(loserTeam.offense), mongoose.Types.ObjectId(loserTeam.defense)]
-            PlayerModel.updateMany({ _id: {$in: winnerTeam}}, {
-                $push: {
-                    games: data._id
-                },
-                $inc: {
-                    wins: 1
-                }
-            }, (err) => {
-                if(err) {
-                    return next(error)
-                }
-            })
-            PlayerModel.updateMany({ _id: {$in: loserTeam}}, {
-                $push: {
-                    games: data._id
-                }
-            }, (err) => {
-                if(err) {
-                    return next(error)
-                }
-            })
+            await utils.addGameToPlayers(data)
             res.json(data)
         }
     })
+})
+
+router.route('/edit').post(async (req, res, next) => {
+    let reqData = req.body
+    let game = await GameModel.findOne({_id: reqData.id})
+    await utils.deleteGameFromPlayers(game)
+    game.loserScore = reqData.loserScore
+    game.whiteTeam = {
+        offense: reqData.players[0],
+        defense: reqData.players[2]
+    }
+    game.blackTeam = {
+        offense: reqData.players[1],
+        defense: reqData.players[3]
+    }
+    game.blackWin = reqData.blackWin
+    await game.save()
+    await utils.addGameToPlayers(game)
+    res.json(game)
 })
 
 router.route('/get/:id').get((req, res, next) => {
@@ -93,7 +87,7 @@ router.route('/delete/:id').delete((req, res, next) => {
 })
 
 router.route('/deleteAll').delete((req, res, next) => {
-    GameModel.remove({}, (error, data) => {
+    GameModel.deleteMany({}, (error, data) => {
         if(error) {
             return next(error)
         } else {
