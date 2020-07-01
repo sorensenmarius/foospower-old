@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">{{ editGame._id ? 'Edit game' : 'Add a game' }}</span>
+          <span class="headline">{{ editGame ? 'Edit game' : 'Add a game' }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -147,7 +147,7 @@
       showModal: Boolean,
       editGame: {
         type: Object,
-        default: () => ({}),
+        default: () => (null),
       },
     },
     data: function () {
@@ -175,7 +175,7 @@
     },
     methods: {
       addGame: function () {
-        if (this.editGame._id) {
+        if (this.editGame) {
           this.$http.post('game/edit', {
             id: this.editGame._id,
             players: this.chosenPlayers,
@@ -189,10 +189,10 @@
             blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
           })
         }
-        this.showModal = false
+        this.$emit('update:showModal', false)
       },
       setEditGame: function () {
-        if (this.editGame._id) {
+        if (this.editGame) {
           this.BK = this.editGame.blackTeam.offense._id
           this.WK = this.editGame.whiteTeam.offense._id
           this.BJ = this.editGame.blackTeam.defense._id

@@ -11,7 +11,7 @@
       justify="center"
     >
       <base-material-card
-        class="player-profile-card"
+        class="player-profile-card mt-15"
         :avatar="player.avatar ? player.avatar : 'https://svgsilh.com/svg_v2/156584.svg'"
       >
         <v-card-text
@@ -177,7 +177,8 @@
       },
       populateDailyPlaysChart () {
         this.player.games.forEach(game => {
-          const dayNumber = new Date(game.createdAt).getDay() + 6 % 7
+          const dayNumber = (new Date(game.createdAt).getDay() + 6) % 7
+          console.log(dayNumber)
           this.dailyPlaysChart.data.series[0][dayNumber] += 1
         })
       },
