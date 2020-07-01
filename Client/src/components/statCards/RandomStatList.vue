@@ -1,6 +1,6 @@
 <template>
   <v-row
-    v-if="!loading"
+    v-if="players.length"
     justify="center"
   >
     <v-col
@@ -51,7 +51,7 @@
     },
     computed: {
       players: function () {
-        return this.$store.getters.getAllPlayers
+        return this.$store.getters.getAllPlayers.filter(p => p.games.length > 5)
       },
       games: function () {
         return this.$store.getters.getAllGames

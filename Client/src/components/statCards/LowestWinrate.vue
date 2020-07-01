@@ -44,7 +44,6 @@
     },
     methods: {
       getWinPercentage (player) {
-        if (player.games.length === 0 || player.wins === 0) return 0
         return Math.round(player.wins / player.games.length * 100)
       },
     },
