@@ -174,21 +174,23 @@
       },
     },
     methods: {
-      addGame: function () {
+      addGame: async function () {
         if (this.editGame) {
-          this.$http.post('game/edit', {
+          await this.$http.post('game/edit', {
             id: this.editGame._id,
             players: this.chosenPlayers,
             loserScore: this.loserScore,
             blackWin: !this.whiteWin,
           })
         } else {
-          this.$http.post('game/create', {
+          await this.$http.post('game/create', {
             players: this.chosenPlayers,
             loserScore: this.loserScore,
             blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
           })
         }
+        await this.$store.dispatch('getAllPlayersFromApi')
+        await this.$store.dispatch('getAllGamesFromApi')
         this.$emit('update:showModal', false)
       },
       setEditGame: function () {
