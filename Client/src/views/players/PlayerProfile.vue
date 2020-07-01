@@ -178,7 +178,6 @@
       populateDailyPlaysChart () {
         this.player.games.forEach(game => {
           const dayNumber = (new Date(game.createdAt).getDay() + 6) % 7
-          console.log(dayNumber)
           this.dailyPlaysChart.data.series[0][dayNumber] += 1
         })
       },
