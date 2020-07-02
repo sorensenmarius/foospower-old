@@ -116,7 +116,6 @@
       profile () {
         return {
           avatar: true,
-          title: this.$t('avatar'),
         }
       },
       mini () {
@@ -129,7 +128,6 @@
         return {
           ...item,
           children: item.children ? item.children.map(this.mapItem) : undefined,
-          title: this.$t(item.title),
         }
       },
     },
