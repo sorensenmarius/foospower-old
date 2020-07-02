@@ -181,10 +181,17 @@
         </v-col>
       </v-row>
       <v-row
-        justify="center"
+        justify="space-around"
       >
         <v-btn
           color="primary"
+          class="ma-0"
+          @click="recordStats"
+        >
+          Record stats
+        </v-btn>
+        <v-btn
+          color="indigo"
           class="ma-0"
           @click="choosing = true"
         >
@@ -217,13 +224,13 @@
     methods: {
       handleChipClick: function (player) {
         if (this.chosenPlayers.includes(player)) {
-          this.chosenPlayers.splice(this.chosenPlayers.findIndex(p => p === player), 1)
+          this.chosenPlayers.splice(this.chosenPlayers.findIndex(p => p._id === player._id), 1)
         } else {
           this.chosenPlayers.push(player)
         }
       },
       isChosen: function (player) {
-        return this.chosenPlayers.includes(player)
+        return this.chosenPlayers.find(p => p._id === player._id)
       },
       shufflePlayers: function () {
         const r = ['WK', 'BK', 'WJ', 'BJ']
@@ -233,6 +240,9 @@
           this.chosenPlayers.splice(i, 1)
         }
         this.choosing = false
+      },
+      recordStats: function () {
+        this.$emit('recordStats', this.roles)
       },
     },
   }

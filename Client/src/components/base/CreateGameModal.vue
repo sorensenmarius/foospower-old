@@ -149,6 +149,10 @@
         type: Object,
         default: () => (null),
       },
+      generatedGame: {
+        type: Object,
+        default: () => (null),
+      },
     },
     data: function () {
       return {
@@ -171,6 +175,10 @@
     watch: {
       editGame: function () {
         this.setEditGame()
+      },
+      generatedGame: {
+        handler: function () { this.setEditGame() },
+        deep: true,
       },
     },
     methods: {
@@ -201,6 +209,13 @@
           this.WJ = this.editGame.whiteTeam.defense._id
           this.whiteWin = !this.editGame.blackWin
           this.loserScore = this.editGame.loserScore
+        } else if (this.generatedGame) {
+          this.BK = this.generatedGame.BK
+          this.WK = this.generatedGame.WK
+          this.BJ = this.generatedGame.BJ
+          this.WJ = this.generatedGame.WJ
+          this.loserScore = 0
+          this.whiteWin = true
         } else {
           this.BK = ''
           this.WK = ''
