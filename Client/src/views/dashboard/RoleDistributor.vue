@@ -181,11 +181,10 @@
         </v-col>
       </v-row>
       <v-row
-        justify="space-around"
+        justify="center"
       >
         <v-btn
           color="primary"
-          class="ma-0"
           @click="recordStats"
         >
           Record stats
