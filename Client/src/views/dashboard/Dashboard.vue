@@ -4,11 +4,14 @@
     fluid
     tag="section"
   >
-    <sequence-generator />
+    <role-distributor
+      @recordStats="generateGame"
+    />
     <random-stat-list />
     <create-game-modal
       :show-modal.sync="showCreateGameModal"
       :update-players="getAllPlayers"
+      :generated-game="generatedGame"
     />
     <create-player-modal
       :show-modal.sync="showCreatePlayerModal"
@@ -26,7 +29,7 @@
         fab
         dark
         color="green"
-        @click="openCreateGameModal"
+        @click="createNewGame"
       >
         <v-icon>mdi-clipboard-plus-outline</v-icon>
       </v-btn>
@@ -37,22 +40,23 @@
 <script>
   import CreateGameModal from '../../components/base/CreateGameModal'
   import CreatePlayerModal from '../../components/base/CreatePlayerModal'
-  import SequenceGenerator from './SequenceGenerator'
   import RandomStatList from '../../components/statCards/RandomStatList'
+  import RoleDistributor from './RoleDistributor'
 
   export default {
     name: 'Home',
     components: {
       CreateGameModal,
       CreatePlayerModal,
-      SequenceGenerator,
       RandomStatList,
+      RoleDistributor,
     },
     data () {
       return {
         fab: false,
         showCreateGameModal: false,
         showCreatePlayerModal: false,
+        generatedGame: null,
       }
     },
     methods: {
@@ -62,6 +66,18 @@
       openCreateGameModal () {
         this.getAllPlayers()
         this.showCreateGameModal = true
+      },
+      generateGame (roles) {
+        this.generatedGame = {}
+        this.generatedGame.BK = roles.BK._id
+        this.generatedGame.WK = roles.WK._id
+        this.generatedGame.BJ = roles.BJ._id
+        this.generatedGame.WJ = roles.WJ._id
+        this.openCreateGameModal()
+      },
+      createNewGame () {
+        this.generatedGame = null
+        this.openCreateGameModal()
       },
     },
   }

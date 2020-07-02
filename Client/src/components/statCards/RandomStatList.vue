@@ -2,6 +2,7 @@
   <v-row
     v-if="players.length"
     justify="center"
+    class="mt-8"
   >
     <v-col
       cols="12"
