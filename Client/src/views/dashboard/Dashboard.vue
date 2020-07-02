@@ -4,7 +4,8 @@
     fluid
     tag="section"
   >
-    <sequence-generator />
+    <!-- <sequence-generator /> -->
+    <role-distributor />
     <random-stat-list />
     <create-game-modal
       :show-modal.sync="showCreateGameModal"
@@ -37,16 +38,18 @@
 <script>
   import CreateGameModal from '../../components/base/CreateGameModal'
   import CreatePlayerModal from '../../components/base/CreatePlayerModal'
-  import SequenceGenerator from './SequenceGenerator'
+  // import SequenceGenerator from './SequenceGenerator'
   import RandomStatList from '../../components/statCards/RandomStatList'
+  import RoleDistributor from './RoleDistributor'
 
   export default {
     name: 'Home',
     components: {
       CreateGameModal,
       CreatePlayerModal,
-      SequenceGenerator,
+      // SequenceGenerator,
       RandomStatList,
+      RoleDistributor,
     },
     data () {
       return {
