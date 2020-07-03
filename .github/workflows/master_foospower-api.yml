@@ -28,10 +28,8 @@ jobs:
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
-      env:
-        DB_URI: ${{ secrets.DB_URI }}
       with:
-        app-name: 'foospower-api'
+        app-name: 'foospowerapi'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2f3a746d8bf74049b5cd959364f8a160 }}
+        publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISH_PROFILE }}
         package: ./Server
