@@ -18,7 +18,7 @@
         >
           <v-chip
             label
-            :color="isChosen(p) ? 'success' : 'indigo'"
+            :color="isChosen(p) ? 'success' : isLocked(p) ? 'red' : 'indigo'"
             class="choose-players-chip"
             text-color="white"
             @click="() => handleChipClick(p)"
@@ -38,7 +38,7 @@
         <v-btn
           color="success"
           class="ma-0 mt-2"
-          :disabled="chosenPlayers.length < 4"
+          :disabled="chosenPlayers.length + lockedPlayers.length < 4"
           @click="shufflePlayers()"
         >
           Start Game
@@ -206,6 +206,7 @@
     data () {
       return {
         chosenPlayers: [],
+        lockedPlayers: [],
         choosing: true,
         roles: {
           WK: {},
@@ -222,7 +223,12 @@
     },
     methods: {
       handleChipClick: function (player) {
-        if (this.chosenPlayers.includes(player)) {
+        if (this.lockedPlayers.includes(player)) {
+          this.lockedPlayers.splice(this.chosenPlayers.findIndex(p => p._id === player._id), 1)
+        } else if (this.chosenPlayers.includes(player)) {
+          if (this.lockedPlayers.length < 4) {
+            this.lockedPlayers.push(player)
+          }
           this.chosenPlayers.splice(this.chosenPlayers.findIndex(p => p._id === player._id), 1)
         } else {
           this.chosenPlayers.push(player)
@@ -231,12 +237,25 @@
       isChosen: function (player) {
         return this.chosenPlayers.find(p => p._id === player._id)
       },
+      isLocked: function (player) {
+        return this.lockedPlayers.find(p => p._id === player._id)
+      },
       shufflePlayers: function () {
         const r = ['WK', 'BK', 'WJ', 'BJ']
+        for (var i = r.length - 1; i > 0; i--) {
+          var rand = Math.floor(Math.random() * (i + 1));
+          [r[i], r[rand]] = [r[rand], r[i]]
+        }
         for (const role of r) {
-          const i = Math.floor(Math.random() * this.chosenPlayers.length)
-          this.roles[role] = this.chosenPlayers[i]
-          this.chosenPlayers.splice(i, 1)
+          if (this.lockedPlayers.length) {
+            const i = Math.floor(Math.random() * this.lockedPlayers.length)
+            this.roles[role] = this.lockedPlayers[i]
+            this.lockedPlayers.splice(i, 1)
+          } else {
+            const i = Math.floor(Math.random() * this.chosenPlayers.length)
+            this.roles[role] = this.chosenPlayers[i]
+            this.chosenPlayers.splice(i, 1)
+          }
         }
         this.choosing = false
       },
