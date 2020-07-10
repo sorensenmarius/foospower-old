@@ -63,17 +63,19 @@
       },
       playerWon (game, player) {
         if (game.blackWin) {
-          if (game.blackTeam.offense._id || game.blackTeam.defense._id) return true
+          if (game.blackTeam.offense === player._id || game.blackTeam.defense === player._id) return true
           return false
         } else {
-          if (game.whiteTeam.offense._id || game.whiteTeam.defense._id) return true
+          if (game.whiteTeam.offense === player._id || game.whiteTeam.defense === player._id) return true
           return false
         }
       },
       streak: function (player) {
         let currentStreak = 0
         let done = false
-        for (const g of player.games) {
+        const games = [...player.games]
+        games.reverse()
+        for (const g of games) {
           done = true
           if (this.playerWon(g, player) && currentStreak >= 0) {
             currentStreak += 1
@@ -88,15 +90,21 @@
       },
       showStreak (player) {
         const streakNumber = this.streak(player)
-
         if (streakNumber >= 3) {
-          return ` | ${streakNumber} <img class='streakImage src='/winningStreak.jpeg''`
+          return ` | ${streakNumber} <img class='streakImage' src='./winningStreak.jpg' />`
         }
         if (streakNumber <= -3) {
-          return ` | ${streakNumber * -1} <img class='streakImage src='/losingStream.jpeg''`
+          return ` | ${streakNumber * -1} <img class='streakImage' src='./losingStreak.png' />`
         }
         return ''
       },
     },
   }
 </script>
+
+<style>
+  img.streakImage {
+    height: 20px;
+    margin-bottom: -4px;
+  }
+</style>
