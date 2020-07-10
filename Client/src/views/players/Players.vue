@@ -15,7 +15,7 @@
         >
           <v-card-text class="text-center">
             <h6 class="display-1 mb-1 grey--text">
-              {{ player.games.length }} | {{ getWinPercentage(player) + '%' }}
+              {{ player.games.length }} | {{ getWinPercentage(player) + '%' }} <span v-html="showStreak(player)" />
             </h6>
 
             <h4 class="display-2 font-weight-light mb-3 black--text">
@@ -60,6 +60,42 @@
       getWinPercentage (player) {
         if (player.games.length === 0 || player.wins === 0) return 0
         return Math.round(player.wins / player.games.length * 100)
+      },
+      playerWon (game, player) {
+        if (game.blackWin) {
+          if (game.blackTeam.offense._id || game.blackTeam.defense._id) return true
+          return false
+        } else {
+          if (game.whiteTeam.offense._id || game.whiteTeam.defense._id) return true
+          return false
+        }
+      },
+      streak: function (player) {
+        let currentStreak = 0
+        let done = false
+        for (const g of player.games) {
+          done = true
+          if (this.playerWon(g, player) && currentStreak >= 0) {
+            currentStreak += 1
+            done = false
+          } else if (!this.playerWon(g, player) && currentStreak <= 0) {
+            currentStreak -= 1
+            done = false
+          }
+          if (done) return currentStreak
+        };
+        return 0
+      },
+      showStreak (player) {
+        const streakNumber = this.streak(player)
+
+        if (streakNumber >= 3) {
+          return ` | ${streakNumber} <img class='streakImage src='/winningStreak.jpeg''`
+        }
+        if (streakNumber <= -3) {
+          return ` | ${streakNumber * -1} <img class='streakImage src='/losingStream.jpeg''`
+        }
+        return ''
       },
     },
   }

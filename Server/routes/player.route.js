@@ -4,7 +4,9 @@ const router = express.Router();
 let PlayerModel = require('../models/Player');
 
 router.route('/getAll').get((req, res, next) => {
-    PlayerModel.find((error, data) => {
+    PlayerModel.find()
+    .populate('games')
+    .exec((error, data) => {
         if(error) {
             return next(error)
         } else {
