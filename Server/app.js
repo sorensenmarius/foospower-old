@@ -30,6 +30,9 @@ app.use(cors());
 // API
 app.use('/game', gameAPI);
 app.use('/player', playerAPI);
+app.get('/db', (req, res) => {
+  res.send(process.env.DB_URI)
+})
 
 // Choose port and start listen
 const port = process.env.PORT || 4000;

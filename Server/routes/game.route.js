@@ -75,6 +75,8 @@ router.route('/get/:id').get((req, res, next) => {
 })
 
 router.route('/delete/:id').delete((req, res, next) => {
+    let game = await GameModel.findOne({_id: req.params.id})
+    await utils.deleteGameFromPlayers(game)
     GameModel.findByIdAndDelete(req.params.id, (error, data) => {
         if (error) {
             return next(error);
