@@ -28,8 +28,6 @@ jobs:
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v1
-      env:
-        DB_URI: ${{ secrets.DB_URI }}
       with:
         app-name: 'foospower-api'
         slot-name: 'production'
