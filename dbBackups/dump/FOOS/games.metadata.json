@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"FOOS.games"}],"uuid":"fa53e5e7d3ec4f429f1f1d7e0d8018d6"}
