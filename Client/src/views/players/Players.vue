@@ -84,14 +84,27 @@
             currentStreak -= 1
             done = false
           }
-          if (done) return currentStreak
+          if (done) break
         };
-        return 0
+        if (player.longestWinningStreak < currentStreak) {
+          this.$http.post('player/setWinningStreak', {
+            id: player._id,
+            streak: currentStreak,
+          })
+        }
+
+        if (player.longestLosingStreak > currentStreak) {
+          this.$http.post('player/setLosingStreak', {
+            id: player._id,
+            streak: currentStreak,
+          })
+        }
+        return currentStreak
       },
       showStreak (player) {
         const streakNumber = this.streak(player)
         if (streakNumber >= 3) {
-          return ` | ${streakNumber} <img class='streakImage' src='./winningStreak.jpg' />`
+          return ` | ${streakNumber} <img class='streakImage' src=' ./winningStreak.jpg' />`
         }
         if (streakNumber <= -3) {
           return ` | ${streakNumber * -1} <img class='streakImage' src='./losingStreak.png' />`

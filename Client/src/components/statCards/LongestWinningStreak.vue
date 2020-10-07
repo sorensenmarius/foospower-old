@@ -9,11 +9,15 @@
       </h6>
 
       <h4 class="display-2 font-weight-light black--text">
-        Lowest Win Percentage
+        Longest Winning Streak
       </h4>
 
       <h6 class="display-1 mb-1 grey--text">
-        {{ getWinPercentage(player) + '%' }}
+        {{ player.longestWinningStreak }}
+        <img
+          class="streakImage"
+          src="/winningStreak.jpg"
+        />
       </h6>
 
       <v-btn
@@ -38,13 +42,15 @@
     },
     computed: {
       player: function () {
-        return this.players.filter(p => p.games >= 25).reduce((min, player) => this.getWinPercentage(min) < this.getWinPercentage(player) ? min : player)
-      },
-    },
-    methods: {
-      getWinPercentage (player) {
-        return Math.round(player.wins / player.games.length * 100)
+        return this.players.reduce((max, player) => max.longestWinningStreak > player.longestWinningStreak ? max : player)
       },
     },
   }
 </script>
+
+<style>
+  img.streakImage {
+    height: 20px;
+    margin-bottom: -4px;
+  }
+</style>

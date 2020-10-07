@@ -138,6 +138,22 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar
+      v-model="gameSentNotification"
+      timeout="2000"
+    >
+      Game has been saved!
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="gameSentNotification = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-row>
 </template>
 
@@ -162,6 +178,7 @@
         WJ: '',
         whiteWin: true,
         loserScore: 0,
+        gameSentNotification: false,
       }
     },
     computed: {
@@ -183,6 +200,7 @@
     },
     methods: {
       addGame: async function () {
+        this.$emit('update:showModal', false)
         if (this.editGame) {
           await this.$http.post('game/edit', {
             id: this.editGame._id,
@@ -199,7 +217,7 @@
         }
         await this.$store.dispatch('getAllPlayersFromApi')
         await this.$store.dispatch('getAllGamesFromApi')
-        this.$emit('update:showModal', false)
+        this.gameSentNotification = true
       },
       setEditGame: function () {
         if (this.editGame) {
