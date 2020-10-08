@@ -17,19 +17,11 @@
 
     <v-divider class="mb-1" />
 
-    <v-list
-      dense
-      nav
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title
-            class="display-1"
-            v-text="'Foospower'"
-          />
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    <img
+      style="margin-left: 10px;"
+      src="/Foospower.png"
+      width="240"
+    />
 
     <v-divider class="mb-2" />
 
