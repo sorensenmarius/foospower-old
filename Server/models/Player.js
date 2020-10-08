@@ -24,6 +24,10 @@ let playerSchema = new Schema({
     longestLosingStreak: {
         type: Number,
         default: 0
+    },
+    rating: {
+        type: Number,
+        default: 1000
     }
 }, {
     collection: 'players',

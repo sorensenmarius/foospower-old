@@ -48,6 +48,12 @@
     <div
       v-else
     >
+      <h3 style="text-align: center">
+        Rating change
+      </h3>
+      <h1 style="text-align: center">
+        {{ calculateRatingDelta() }}
+      </h1>
       <v-row>
         <v-col
           cols="6"
@@ -220,6 +226,18 @@
       players: function () {
         return this.$store.getters.getAllPlayers
       },
+      whiteRating: function () {
+        if (this.roles.WK && this.roles.WJ) {
+          return (this.roles.WK.rating + this.roles.WJ.rating) / 2
+        }
+        return null
+      },
+      blackRating: function () {
+        if (this.roles.WK && this.roles.WJ) {
+          return (this.roles.BK.rating + this.roles.BJ.rating) / 2
+        }
+        return null
+      },
     },
     methods: {
       handleChipClick: function (player) {
@@ -261,6 +279,14 @@
       },
       recordStats: function () {
         this.$emit('recordStats', this.roles)
+      },
+      calculateRatingDelta: function () {
+        const highestRating = this.whiteRating > this.blackRating ? this.whiteRating : this.blackRating
+        const lowestRating = this.whiteRating < this.blackRating ? this.whiteRating : this.blackRating
+
+        const chanceToWin = 1 / (1 + Math.pow(10, (lowestRating - highestRating) / 400))
+
+        return Math.round(64 * (1 - chanceToWin))
       },
     },
   }
