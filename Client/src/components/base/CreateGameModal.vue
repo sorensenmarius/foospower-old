@@ -132,6 +132,7 @@
             color="blue darken-1"
             text
             @click="addGame"
+            :disabled="sendingGame"
           >
             Save
           </v-btn>
@@ -179,6 +180,7 @@
         whiteWin: true,
         loserScore: 0,
         gameSentNotification: false,
+        sendingGame: false,
       }
     },
     computed: {
@@ -201,6 +203,7 @@
     methods: {
       addGame: async function () {
         this.$emit('update:showModal', false)
+        this.sendingGame = true
         if (this.editGame) {
           await this.$http.post('game/edit', {
             id: this.editGame._id,
@@ -215,6 +218,7 @@
             blackWin: !this.whiteWin, // Retarded because it had to be changed after deployment
           })
         }
+        this.sendingGame = false
         await this.$store.dispatch('getAllPlayersFromApi')
         await this.$store.dispatch('getAllGamesFromApi')
         this.gameSentNotification = true
