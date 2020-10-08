@@ -25,6 +25,8 @@
   import MostGamesPlayed from './MostGamesPlayed'
   import LongestWinningStreak from './LongestWinningStreak'
   import LongestLosingStreak from './LongestLosingStreak'
+  import LongestCurrentWinningStreak from './LongestCurrentWinningStreak'
+  import LongestCurrentLosingStreak from './LongestCurrentLosingStreak'
 
   export default {
     components: {
@@ -33,6 +35,8 @@
       MostGamesPlayed,
       LongestWinningStreak,
       LongestLosingStreak,
+      LongestCurrentWinningStreak,
+      LongestCurrentLosingStreak,
     },
     data () {
       return {
@@ -43,6 +47,8 @@
           'mostGamesPlayed',
           'longestWinningStreak',
           'longestLosingStreak',
+          'longestCurrentWinningStreak',
+          'longestCurrentLosingStreak',
         ],
         currentComponents: [],
       }
