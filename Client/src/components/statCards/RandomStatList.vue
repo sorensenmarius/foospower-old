@@ -29,6 +29,7 @@
   import LongestCurrentLosingStreak from './LongestCurrentLosingStreak'
   import MostGoalsScored from './MostGoalsScored'
   import PositionDifference from './PositionDifference'
+  import ColorDifference from './ColorDifference'
 
   export default {
     components: {
@@ -41,6 +42,7 @@
       LongestCurrentLosingStreak,
       MostGoalsScored,
       PositionDifference,
+      ColorDifference,
     },
     data () {
       return {
@@ -55,6 +57,7 @@
           'longestCurrentLosingStreak',
           'mostGoalsScored',
           'positionDifference',
+          'colorDifference',
         ],
         currentComponents: [],
       }

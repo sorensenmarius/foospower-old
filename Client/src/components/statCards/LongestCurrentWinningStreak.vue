@@ -50,7 +50,7 @@
       player: function () {
         const filteredPlayers = this.players.filter(p => p.games >= 25)
         if (filteredPlayers.length) {
-          return filteredPlayers.reduce((max, player) => this.streak(max) > this.streak(player) ? max : player)
+          return filteredPlayers.filter(p => p.games >= 25).reduce((max, player) => this.streak(max) > this.streak(player) ? max : player)
         }
         return null
       },

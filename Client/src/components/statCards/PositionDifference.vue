@@ -13,7 +13,7 @@
       </h4>
 
       <h6 class="display-1 mb-1 grey--text">
-        Has {{ Math.round(Math.abs(getPositionWinrateDifference(player))*100) }} % higher winrate on {{ getPositionWinrateDifference(player) > 0 ? 'offense' : 'defense' }}
+        Has {{ Math.round(Math.abs(getPositionWinrateDifference(player))*100) }}% higher winrate on {{ getPositionWinrateDifference(player) > 0 ? 'offense' : 'defense' }}
       </h6>
 
       <v-btn
@@ -38,7 +38,7 @@
     },
     computed: {
       player: function () {
-        return this.players.reduce((max, player) => Math.abs(this.getPositionWinrateDifference(max)) > Math.abs(this.getPositionWinrateDifference(player)) ? max : player)
+        return this.players.filter(p => p.games >= 25).reduce((max, player) => Math.abs(this.getPositionWinrateDifference(max)) > Math.abs(this.getPositionWinrateDifference(player)) ? max : player)
       },
     },
     methods: {
