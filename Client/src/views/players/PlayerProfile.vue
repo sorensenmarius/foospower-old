@@ -24,7 +24,7 @@
             <v-col
               cols="12"
               sm="4"
-              md="3"
+              md="2"
             >
               <v-row
                 justify="center"
@@ -44,7 +44,47 @@
             <v-col
               cols="12"
               sm="4"
-              md="3"
+              md="2"
+            >
+              <v-row
+                justify="center"
+              >
+                <h6 class="display-1 grey--text">
+                  Goals Scored
+                </h6>
+              </v-row>
+              <v-row
+                justify="center"
+              >
+                <h6 class="display-1 mb-1">
+                  {{ goalsScored() }}
+                </h6>
+              </v-row>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+              md="2"
+            >
+              <v-row
+                justify="center"
+              >
+                <h6 class="display-1 grey--text">
+                  Rating
+                </h6>
+              </v-row>
+              <v-row
+                justify="center"
+              >
+                <h6 class="display-1 mb-1">
+                  {{ player.rating }}
+                </h6>
+              </v-row>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+              md="2"
             >
               <v-row
                 justify="center"
@@ -64,7 +104,7 @@
             <v-col
               cols="12"
               sm="4"
-              md="3"
+              md="2"
             >
               <v-row
                 justify="center"
@@ -84,7 +124,7 @@
             <v-col
               cols="12"
               sm="4"
-              md="3"
+              md="2"
             >
               <v-row
                 justify="center"
@@ -139,9 +179,9 @@
         dailyPlaysChart: {
           data: {
             series: [
-              [0, 0, 0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0],
             ],
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            labels: ['M', 'T', 'W', 'T', 'F'],
           },
           options: {
             lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -177,9 +217,30 @@
       },
       populateDailyPlaysChart () {
         this.player.games.forEach(game => {
-          const dayNumber = (new Date(game.createdAt).getDay() + 6) % 7
+          const dayNumber = (new Date(game.createdAt).getDay() + 4) % 5
           this.dailyPlaysChart.data.series[0][dayNumber] += 1
         })
+      },
+      goalsScored () {
+        let goals = 0
+        this.player.games.forEach(game => {
+          if (game.whiteTeam.offense === this.player._id || game.whiteTeam.defense === this.player._id) {
+            if (!game.blackWin) {
+              goals += 10
+            } else {
+              goals += game.loserScore
+            }
+          }
+
+          if (game.blackTeam.offense === this.player._id || game.blackTeam.defense === this.player._id) {
+            if (game.blackWin) {
+              goals += 10
+            } else {
+              goals += game.loserScore
+            }
+          }
+        })
+        return goals
       },
     },
   }

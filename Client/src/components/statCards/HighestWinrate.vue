@@ -38,7 +38,7 @@
     },
     computed: {
       player: function () {
-        return this.players.reduce((max, player) => this.getWinPercentage(max) > this.getWinPercentage(player) ? max : player)
+        return this.players.filter(p => p.games >= 25).reduce((max, player) => this.getWinPercentage(max) > this.getWinPercentage(player) ? max : player)
       },
     },
     methods: {

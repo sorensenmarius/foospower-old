@@ -14,6 +14,9 @@
           :avatar="player.avatar ? player.avatar : 'https://svgsilh.com/svg_v2/156584.svg'"
         >
           <v-card-text class="text-center">
+            <h5 class="display-2 mb-1 grey--text">
+              {{ player.rating }}
+            </h5>
             <h6 class="display-1 mb-1 grey--text">
               {{ player.games.length }} | {{ getWinPercentage(player) + '%' }} <span v-html="showStreak(player)" />
             </h6>
@@ -84,14 +87,27 @@
             currentStreak -= 1
             done = false
           }
-          if (done) return currentStreak
+          if (done) break
         };
-        return 0
+        if (player.longestWinningStreak < currentStreak) {
+          this.$http.post('player/setWinningStreak', {
+            id: player._id,
+            streak: currentStreak,
+          })
+        }
+
+        if (player.longestLosingStreak > currentStreak) {
+          this.$http.post('player/setLosingStreak', {
+            id: player._id,
+            streak: currentStreak,
+          })
+        }
+        return currentStreak
       },
       showStreak (player) {
         const streakNumber = this.streak(player)
         if (streakNumber >= 3) {
-          return ` | ${streakNumber} <img class='streakImage' src='./winningStreak.jpg' />`
+          return ` | ${streakNumber} <img class='streakImage' src=' ./winningStreak.jpg' />`
         }
         if (streakNumber <= -3) {
           return ` | ${streakNumber * -1} <img class='streakImage' src='./losingStreak.png' />`

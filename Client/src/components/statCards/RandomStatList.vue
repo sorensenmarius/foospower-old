@@ -5,29 +5,14 @@
     class="mt-8"
   >
     <v-col
+      v-for="component in currentComponents"
+      :key="'component' + component"
       cols="12"
       sm="12"
       md="4"
     >
-      <highest-winrate
-        :players="players"
-      />
-    </v-col>
-    <v-col
-      cols="12"
-      sm="12"
-      md="4"
-    >
-      <lowest-winrate
-        :players="players"
-      />
-    </v-col>
-    <v-col
-      cols="12"
-      sm="12"
-      md="4"
-    >
-      <most-games-played
+      <component
+        :is="component"
         :players="players"
       />
     </v-col>
@@ -38,16 +23,43 @@
   import HighestWinrate from './HighestWinrate'
   import LowestWinrate from './LowestWinrate'
   import MostGamesPlayed from './MostGamesPlayed'
+  import LongestWinningStreak from './LongestWinningStreak'
+  import LongestLosingStreak from './LongestLosingStreak'
+  import LongestCurrentWinningStreak from './LongestCurrentWinningStreak'
+  import LongestCurrentLosingStreak from './LongestCurrentLosingStreak'
+  import MostGoalsScored from './MostGoalsScored'
+  import PositionDifference from './PositionDifference'
+  import ColorDifference from './ColorDifference'
 
   export default {
     components: {
       HighestWinrate,
       LowestWinrate,
       MostGamesPlayed,
+      LongestWinningStreak,
+      LongestLosingStreak,
+      LongestCurrentWinningStreak,
+      LongestCurrentLosingStreak,
+      MostGoalsScored,
+      PositionDifference,
+      ColorDifference,
     },
     data () {
       return {
         loading: true,
+        componentNames: [
+          'highestWinrate',
+          'lowestWinrate',
+          'mostGamesPlayed',
+          'longestWinningStreak',
+          'longestLosingStreak',
+          'longestCurrentWinningStreak',
+          'longestCurrentLosingStreak',
+          'mostGoalsScored',
+          'positionDifference',
+          'colorDifference',
+        ],
+        currentComponents: [],
       }
     },
     computed: {
@@ -61,6 +73,7 @@
     async mounted () {
       await this.getAllPlayers()
       await this.getAllGames()
+      this.chooseRandomComponents()
       this.loading = false
     },
     methods: {
@@ -69,6 +82,18 @@
       },
       async getAllGames () {
         await this.$store.dispatch('getAllGamesFromApi')
+      },
+      chooseRandomComponents () {
+        let n = 3
+        const result = new Array(n)
+        let len = this.componentNames.length
+        const taken = new Array(len)
+        while (n--) {
+          var x = Math.floor(Math.random() * len)
+          result[n] = this.componentNames[x in taken ? taken[x] : x]
+          taken[x] = --len in taken ? taken[len] : len
+        }
+        this.currentComponents = result
       },
     },
   }

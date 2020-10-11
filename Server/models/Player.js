@@ -16,6 +16,18 @@ let playerSchema = new Schema({
     avatar: {
         type: String,
         default: ''
+    },
+    longestWinningStreak: {
+        type: Number,
+        default: 0
+    },
+    longestLosingStreak: {
+        type: Number,
+        default: 0
+    },
+    rating: {
+        type: Number,
+        default: 1000
     }
 }, {
     collection: 'players',

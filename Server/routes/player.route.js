@@ -64,4 +64,18 @@ router.route('/resetAll').get((req, res, next) => {
     })
 })
 
+router.route('/setWinningStreak').post(async (req, res, next) => {
+    let player = await PlayerModel.findOne({_id: req.body.id})
+    player.longestWinningStreak = req.body.streak;
+    await player.save()
+    res.json(player)
+})
+
+router.route('/setLosingStreak').post(async (req, res, next) => {
+    let player = await PlayerModel.findOne({_id: req.body.id})
+    player.longestLosingStreak = Math.abs(req.body.streak);
+    await player.save()
+    res.json(player)
+})
+
 module.exports = router;

@@ -9,11 +9,11 @@
       </h6>
 
       <h4 class="display-2 font-weight-light black--text">
-        Lowest Win Percentage
+        Most Goals Scored
       </h4>
 
       <h6 class="display-1 mb-1 grey--text">
-        {{ getWinPercentage(player) + '%' }}
+        {{ goalsScored(player) }}
       </h6>
 
       <v-btn
@@ -38,12 +38,30 @@
     },
     computed: {
       player: function () {
-        return this.players.filter(p => p.games >= 25).reduce((min, player) => this.getWinPercentage(min) < this.getWinPercentage(player) ? min : player)
+        return this.players.reduce((max, player) => this.goalsScored(max) > this.goalsScored(player) ? max : player)
       },
     },
     methods: {
-      getWinPercentage (player) {
-        return Math.round(player.wins / player.games.length * 100)
+      goalsScored (player) {
+        let goals = 0
+        player.games.forEach(game => {
+          if (game.whiteTeam.offense === player._id || game.whiteTeam.defense === player._id) {
+            if (!game.blackWin) {
+              goals += 10
+            } else {
+              goals += game.loserScore
+            }
+          }
+
+          if (game.blackTeam.offense === player._id || game.blackTeam.defense === player._id) {
+            if (game.blackWin) {
+              goals += 10
+            } else {
+              goals += game.loserScore
+            }
+          }
+        })
+        return goals
       },
     },
   }

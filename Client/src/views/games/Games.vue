@@ -43,6 +43,12 @@
         </tbody>
       </v-simple-table>
     </base-material-card>
+    <h2
+      style="text-align: center"
+      v-if="games.length >= 49"
+    >
+      Only showing last 50 games.
+    </h2>
     <create-game-modal
       :show-modal.sync="showCreateGameModal"
       :edit-game="editGame"
@@ -84,10 +90,14 @@
         return player.wins / player.games.length * 100
       },
       getWinnerTeam (game) {
-        if (game.blackWin) {
-          return game.blackTeam.offense.name + ' & ' + game.blackTeam.defense.name + ' (B)'
+        try {
+          if (game.blackWin) {
+            return game.blackTeam.offense.name + ' & ' + game.blackTeam.defense.name + ' (B)'
+          }
+          return game.whiteTeam.offense.name + ' & ' + game.whiteTeam.defense.name + ' (W)'
+        } catch (error) {
+          console.log(game)
         }
-        return game.whiteTeam.offense.name + ' & ' + game.whiteTeam.defense.name + ' (W)'
       },
       getLoserTeam (game) {
         if (!game.blackWin) {

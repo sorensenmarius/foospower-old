@@ -10,6 +10,19 @@ let utils = require('../utilities/utils')
 router.route('/getAll').get((req, res, next) => {
     GameModel.find()
     .populate('whiteTeam.offense whiteTeam.defense blackTeam.offense blackTeam.defense')
+    .limit(50)
+    .exec((error, data) => {
+        if(error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+router.route('/getAll').get((req, res, next) => {
+    GameModel.find()
+    .populate('whiteTeam.offense whiteTeam.defense blackTeam.offense blackTeam.defense')
     .exec((error, data) => {
         if(error) {
             return next(error)
