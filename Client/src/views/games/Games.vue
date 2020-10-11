@@ -90,14 +90,10 @@
         return player.wins / player.games.length * 100
       },
       getWinnerTeam (game) {
-        try {
-          if (game.blackWin) {
-            return game.blackTeam.offense.name + ' & ' + game.blackTeam.defense.name + ' (B)'
-          }
-          return game.whiteTeam.offense.name + ' & ' + game.whiteTeam.defense.name + ' (W)'
-        } catch (error) {
-          console.log(game)
+        if (game.blackWin) {
+          return game.blackTeam.offense.name + ' & ' + game.blackTeam.defense.name + ' (B)'
         }
+        return game.whiteTeam.offense.name + ' & ' + game.whiteTeam.defense.name + ' (W)'
       },
       getLoserTeam (game) {
         if (!game.blackWin) {
