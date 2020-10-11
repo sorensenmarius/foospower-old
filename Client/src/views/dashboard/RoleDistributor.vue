@@ -258,9 +258,9 @@
     },
     methods: {
       handleChipClick: function (player) {
-        if (this.lockedPlayers.includes(player)) {
+        if (this.isLocked(player)) {
           this.lockedPlayers.splice(this.chosenPlayers.findIndex(p => p._id === player._id), 1)
-        } else if (this.chosenPlayers.includes(player)) {
+        } else if (this.isChosen(player)) {
           if (this.lockedPlayers.length < 4) {
             this.lockedPlayers.push(player)
           }
