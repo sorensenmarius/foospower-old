@@ -6,7 +6,7 @@
   >
     <img
       src="/Foospower.png"
-      style="max-width: 100%"
+      class="dashboard-logo"
     />
     <role-distributor
       @recordStats="generateGame"
@@ -97,5 +97,11 @@
 
   .create-buttons .v-btn {
     margin: 0px 5px;
+  }
+
+  .dashboard-logo {
+    max-width: min(100%, 300px);
+    display: block;
+    margin: auto;
   }
 </style>
