@@ -4,7 +4,7 @@
     v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
-    src="/JanEgil.jpg"
+    :src="randomImage()"
     app
     width="260"
   >
@@ -111,6 +111,10 @@
           ...item,
           children: item.children ? item.children.map(this.mapItem) : undefined,
         }
+      },
+      randomImage () {
+        const images = ['Aleksander.jpg', 'JanEgil.jpg']
+        return images[Math.floor(Math.random() * images.length)]
       },
     },
   }
