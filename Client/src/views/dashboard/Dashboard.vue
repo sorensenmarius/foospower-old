@@ -4,6 +4,10 @@
     fluid
     tag="section"
   >
+    <img
+      src="/Foospower.png"
+      style="max-width: 100%"
+    />
     <role-distributor
       @recordStats="generateGame"
     />

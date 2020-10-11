@@ -4,7 +4,7 @@
     v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
-    :src="barImage"
+    src="/JanEgil.jpg"
     app
     width="260"
   >
@@ -14,16 +14,6 @@
         v-bind="props"
       />
     </template>
-
-    <v-divider class="mb-1" />
-
-    <img
-      style="margin-left: 10px;"
-      src="/Foospower.png"
-      width="240"
-    />
-
-    <v-divider class="mb-2" />
 
     <v-list
       expand
