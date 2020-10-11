@@ -48,12 +48,28 @@
     <div
       v-else
     >
-      <h3 style="text-align: center">
-        Rating change
-      </h3>
-      <h1 style="text-align: center">
-        {{ calculateRatingDelta() }}
-      </h1>
+      <v-row>
+        <v-col
+          cols="6"
+          class="pa-1"
+        >
+          <h2
+            style="text-align: center"
+          >
+            + {{ calculateRatingDelta('white') }}
+          </h2>
+        </v-col>
+        <v-col
+          cols="6"
+          class="pa-1"
+        >
+          <h2
+            style="text-align: center"
+          >
+            + {{ calculateRatingDelta('black') }}
+          </h2>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col
           cols="6"
@@ -280,11 +296,13 @@
       recordStats: function () {
         this.$emit('recordStats', this.roles)
       },
-      calculateRatingDelta: function () {
-        const highestRating = this.whiteRating > this.blackRating ? this.whiteRating : this.blackRating
-        const lowestRating = this.whiteRating < this.blackRating ? this.whiteRating : this.blackRating
-
-        const chanceToWin = 1 / (1 + Math.pow(10, (lowestRating - highestRating) / 400))
+      calculateRatingDelta: function (team) {
+        let chanceToWin = 0
+        if (team === 'white') {
+          chanceToWin = 1 / (1 + Math.pow(10, (this.blackRating - this.whiteRating) / 400))
+        } else {
+          chanceToWin = 1 / (1 + Math.pow(10, (this.whiteRating - this.blackRating) / 400))
+        }
 
         return Math.round(64 * (1 - chanceToWin))
       },
