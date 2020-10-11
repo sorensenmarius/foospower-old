@@ -50,7 +50,7 @@
     computed: {
       players: function () {
         const players = this.$store.getters.getAllPlayers
-        return players.sort((a, b) => (a.games.length > b.games.length ? -1 : 1))
+        return players.sort((a, b) => (a.rating > b.rating ? -1 : 1))
       },
     },
     mounted () {

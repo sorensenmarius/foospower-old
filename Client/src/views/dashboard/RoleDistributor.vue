@@ -240,7 +240,8 @@
     },
     computed: {
       players: function () {
-        return this.$store.getters.getAllPlayers
+        const players = this.$store.getters.getAllPlayers
+        return players.sort((a, b) => (a.games.length > b.games.length ? -1 : 1))
       },
       whiteRating: function () {
         if (this.roles.WK && this.roles.WJ) {
