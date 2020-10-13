@@ -38,7 +38,7 @@
     },
     computed: {
       player: function () {
-        return this.players.reduce((max, player) => Math.abs(this.getColorWinrateDifference(max)) > Math.abs(this.getColorWinrateDifference(player)) ? max : player)
+        return this.players.filter(p => p.games >= 25).reduce((max, player) => Math.abs(this.getColorWinrateDifference(max)) > Math.abs(this.getColorWinrateDifference(player)) ? max : player)
       },
     },
     methods: {
