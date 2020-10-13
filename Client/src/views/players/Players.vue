@@ -96,7 +96,7 @@
           })
         }
 
-        if (player.longestLosingStreak > currentStreak) {
+        if (player.longestLosingStreak < Math.abs(currentStreak)) {
           this.$http.post('player/setLosingStreak', {
             id: player._id,
             streak: currentStreak,
