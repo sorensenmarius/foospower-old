@@ -38,7 +38,7 @@
 
         <div
           v-else-if="title && !icon"
-          class="display-1 font-weight-light"
+          class="text-h4 font-weight-light"
           v-text="title"
         />
 

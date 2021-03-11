@@ -11,7 +11,7 @@
       >
         <base-material-card color="primary">
           <template v-slot:heading>
-            <div class="display-2 font-weight-light">
+            <div class="text-h3 font-weight-light">
               Vuetify Material Dashboard
             </div>
 

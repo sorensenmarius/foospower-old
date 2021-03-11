@@ -17,7 +17,7 @@
         <v-card-text
           class="text-center"
         >
-          <h4 class="display-2 font-weight-light black--text">
+          <h4 class="text-h3 font-weight-light black--text">
             {{ player.name }}
           </h4>
           <v-row>
@@ -29,14 +29,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Winrate
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ getWinPercentage() + '%' }}
                 </h6>
               </v-row>
@@ -49,14 +49,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Goals Scored
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ goalsScored() }}
                 </h6>
               </v-row>
@@ -69,14 +69,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Rating
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ player.rating }}
                 </h6>
               </v-row>
@@ -89,14 +89,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Games Played
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ player.games.length }}
                 </h6>
               </v-row>
@@ -109,14 +109,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Games Won
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ player.wins }}
                 </h6>
               </v-row>
@@ -129,14 +129,14 @@
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 grey--text">
+                <h6 class="text-h4 grey--text">
                   Games Lost
                 </h6>
               </v-row>
               <v-row
                 justify="center"
               >
-                <h6 class="display-1 mb-1">
+                <h6 class="text-h4 mb-1">
                   {{ player.games.length - player.wins }}
                 </h6>
               </v-row>

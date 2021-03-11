@@ -4,15 +4,15 @@
     :avatar="player.avatar ? player.avatar : 'https://svgsilh.com/svg_v2/156584.svg'"
   >
     <v-card-text class="text-center">
-      <h6 class="display-1 mb-1 grey--text">
+      <h6 class="text-h4 mb-1 grey--text">
         {{ player.name }}
       </h6>
 
-      <h4 class="display-2 font-weight-light black--text">
+      <h4 class="text-h3 font-weight-light black--text">
         Longest Losing Streak
       </h4>
 
-      <h6 class="display-1 mb-1 grey--text">
+      <h6 class="text-h4 mb-1 grey--text">
         {{ player.longestLosingStreak }}
         <img
           class="streakImage"

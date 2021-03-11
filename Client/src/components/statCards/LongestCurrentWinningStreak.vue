@@ -5,18 +5,18 @@
   >
     <v-card-text class="text-center">
       <h6
-        class="display-1 mb-1 grey--text"
+        class="text-h4 mb-1 grey--text"
       >
         {{ anyWinningStreaks ? player.name : '' }}
       </h6>
 
-      <h4 class="display-2 font-weight-light black--text">
+      <h4 class="text-h3 font-weight-light black--text">
         {{ anyWinningStreaks ? 'Longest Current Winning Streak' : 'No Current Winning Streaks' }}
       </h4>
 
       <h6
         v-if="anyWinningStreaks"
-        class="display-1 mb-1 grey--text"
+        class="text-h4 mb-1 grey--text"
       >
         {{ Math.abs(streak(player)) }}
         <img
