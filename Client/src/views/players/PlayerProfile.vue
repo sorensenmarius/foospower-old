@@ -154,14 +154,14 @@
         >
           <base-material-chart-card
             class="player-profile-card"
-            :data="dailyPlaysChart.data"
-            :options="{ ...dailyPlaysChart.options, high: chartMaxValue }"
+            :data="ratingChart.data"
+            :options="{ ...ratingChart.options, low: charMinValue, high: chartMaxValue}"
             color="success"
             hover-reveal
             type="Line"
           >
             <h4 class="card-title font-weight-light mt-2 ml-2">
-              Games played per day
+              Rating
             </h4>
           </base-material-chart-card>
         </v-row>
@@ -176,12 +176,11 @@
       return {
         player: {},
         loading: true,
-        dailyPlaysChart: {
+        ratingChart: {
           data: {
             series: [
               [0, 0, 0, 0, 0],
             ],
-            labels: ['M', 'T', 'W', 'T', 'F'],
           },
           options: {
             lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -201,13 +200,16 @@
     },
     computed: {
       chartMaxValue: function () {
-        return Math.max(...this.dailyPlaysChart.data.series[0]) * 1.2
+        return Math.max(...this.ratingChart.data.series[0]) * 1.2
+      },
+      charMinValue: function () {
+        return Math.min(...this.ratingChart.data.series[0]) * 0.8
       },
     },
     async mounted () {
       const res = await this.$http.get('/player/get/' + this.$route.params.id)
       this.player = res.data
-      this.populateDailyPlaysChart()
+      this.populateRatingChart()
       this.loading = false
     },
     methods: {
@@ -215,11 +217,8 @@
         if (this.player.games.length === 0 || this.player.wins === 0) return 0
         return Math.round(this.player.wins / this.player.games.length * 100)
       },
-      populateDailyPlaysChart () {
-        this.player.games.forEach(game => {
-          const dayNumber = (new Date(game.createdAt).getDay() + 4) % 5
-          this.dailyPlaysChart.data.series[0][dayNumber] += 1
-        })
+      populateRatingChart () {
+        this.ratingChart.data.series[0] = this.player.ratings
       },
       goalsScored () {
         let goals = 0

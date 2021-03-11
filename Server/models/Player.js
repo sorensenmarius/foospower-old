@@ -28,6 +28,10 @@ let playerSchema = new Schema({
     rating: {
         type: Number,
         default: 1000
+    },
+    ratings: {
+        type: [Number],
+        default: [1000]
     }
 }, {
     collection: 'players',

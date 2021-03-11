@@ -74,11 +74,16 @@ async function updateRating(winnerTeam, loserTeam) {
     let loserRating = ( loserOffense.rating + loserDefense.rating ) / 2
 
     let ratingDelta = getRatingDelta(winnerRating, loserRating, 1)
+
     winnerOffense.rating += ratingDelta
+    winnerOffense.ratings.push(winnerOffense.rating)
     winnerDefense.rating += ratingDelta
+    winnerDefense.ratings.push(winnerDefense.rating)
 
     loserOffense.rating -= ratingDelta
+    loserOffense.ratings.push(loserOffense.rating)
     loserDefense.rating -= ratingDelta
+    loserDefense.ratings.push(loserDefense.rating)
 
     await winnerOffense.save()
     await winnerDefense.save()
