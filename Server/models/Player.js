@@ -20,11 +20,11 @@ let playerSchema = new Schema(
       type: String,
       default: "",
     },
-    currentStreak: {
+    winStreak: {
       type: Number,
       default: 0,
     },
-    longestWinningStreak: {
+    longestWinStreak: {
       type: Number,
       default: 0,
     },

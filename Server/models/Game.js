@@ -1,33 +1,39 @@
-const mongoose = require('mongoose');
-const Schema= mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 var teamSchema = new Schema({
-    offense: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-    }, 
-    defense: {
-        type: Schema.Types.ObjectId,
-        ref: 'Player'
-    }
-})
+  offense: {
+    type: Schema.Types.ObjectId,
+    ref: "Player",
+  },
+  defense: {
+    type: Schema.Types.ObjectId,
+    ref: "Player",
+  },
+});
 
-let gameSchema = new Schema({
-    loserScore: {
-        type: Number
+let gameSchema = new Schema(
+  {
+    blackScore: {
+      type: Number,
+    },
+    whiteScore: {
+      type: Number,
     },
     whiteTeam: {
-        type: teamSchema
+      type: teamSchema,
     },
     blackTeam: {
-        type: teamSchema
+      type: teamSchema,
     },
-    blackWin: {
-        type: Boolean
-    }
-}, {
-    collection: 'games',
-    timestamps: true
-})
+    rating: {
+      type: Number,
+    },
+  },
+  {
+    collection: "games",
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('Game', gameSchema)
+module.exports = mongoose.model("Game", gameSchema);
