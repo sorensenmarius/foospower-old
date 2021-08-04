@@ -7,7 +7,7 @@
     <img
       src="/Foospower.png"
       class="dashboard-logo"
-    />
+    >
     <role-distributor
       @recordStats="generateGame"
     />

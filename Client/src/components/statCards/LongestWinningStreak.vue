@@ -17,7 +17,7 @@
         <img
           class="streakImage"
           src="/winningStreak.jpg"
-        />
+        >
       </h6>
 
       <v-btn

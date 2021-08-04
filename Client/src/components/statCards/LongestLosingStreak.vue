@@ -17,7 +17,7 @@
         <img
           class="streakImage"
           src="/losingStreak.png"
-        />
+        >
       </h6>
 
       <v-btn

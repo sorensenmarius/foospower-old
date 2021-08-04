@@ -44,8 +44,8 @@
       </v-simple-table>
     </base-material-card>
     <h2
-      style="text-align: center"
       v-if="games.length >= 49"
+      style="text-align: center"
     >
       Only showing last 50 games.
     </h2>

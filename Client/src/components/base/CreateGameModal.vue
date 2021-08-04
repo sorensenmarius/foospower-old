@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title>
-          <span class="headline">{{ editGame ? 'Edit game' : 'Add a game' }}</span>
+          <span class="text-h5">{{ editGame ? 'Edit game' : 'Add a game' }}</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -131,8 +131,8 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="addGame"
             :disabled="sendingGame"
+            @click="addGame"
           >
             Save
           </v-btn>

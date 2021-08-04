@@ -1,41 +1,58 @@
-const mongoose = require('mongoose');
-const Schema= mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-let playerSchema = new Schema({
+let playerSchema = new Schema(
+  {
     name: {
-        type: String
+      type: String,
     },
-    games: [{
+    games: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Game'
-    }],
+        ref: "Game",
+      },
+    ],
     wins: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     avatar: {
-        type: String,
-        default: ''
+      type: String,
+      default: "",
+    },
+    currentStreak: {
+      type: Number,
+      default: 0,
     },
     longestWinningStreak: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     longestLosingStreak: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
-    rating: {
-        type: Number,
-        default: 1000
+    offenseRating: {
+      type: Number,
+      default: 1000,
     },
-    ratings: {
-        type: [Number],
-        default: [1000]
-    }
-}, {
-    collection: 'players',
-    timestamps: true
-})
+    offenseRatings: {
+      type: [Number],
+      default: [1000],
+    },
+    defenseRating: {
+      type: Number,
+      default: 1000,
+    },
+    defenseRatings: {
+      type: [Number],
+      default: [1000],
+    },
+  },
+  {
+    collection: "players",
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('Player', playerSchema)
+module.exports = mongoose.model("Player", playerSchema);

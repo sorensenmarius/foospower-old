@@ -30,6 +30,7 @@
   import MostGoalsScored from './MostGoalsScored'
   import PositionDifference from './PositionDifference'
   import ColorDifference from './ColorDifference'
+  import { shuffleArray } from '../../utils/arrayUtils'
 
   export default {
     components: {
@@ -84,16 +85,7 @@
         await this.$store.dispatch('getAllGamesFromApi')
       },
       chooseRandomComponents () {
-        let n = 3
-        const result = new Array(n)
-        let len = this.componentNames.length
-        const taken = new Array(len)
-        while (n--) {
-          var x = Math.floor(Math.random() * len)
-          result[n] = this.componentNames[x in taken ? taken[x] : x]
-          taken[x] = --len in taken ? taken[len] : len
-        }
-        this.currentComponents = result
+        this.currentComponents = shuffleArray(this.componentNames).slice(0, 3)
       },
     },
   }
